@@ -93,6 +93,32 @@ SELECT *, CONCAT(arrival_date_year,'-', arrival_month_number) AS arrival_date_ye
 
 
 ## Calcula o impacto de um cancelamento devido ao pagamento de comissão de MKT
+SELECT booking_date,
+SUM(is_canceled) AS canceled_bookings,
+COUNT(*) - SUM(is_canceled)  AS not_canceled_bookings,
+SUM(is_canceled)*1.5 AS canceled_bookings_payment,
+(COUNT(*) - SUM(is_canceled))*1.5  AS not_canceled_bookings_payment,
+FROM `projeto-4-ana-caloi.hotel_bookings.booking_date` 
+GROUP BY booking_date
+ORDER BY booking_date
 
 
 ## Calcula o impacto de um cancelamento feito com menos de 3 dias de antecedência
+SELECT booking_date,
+DATE_DIFF(arrival_date_v2, reservation_status_date, DAY) AS days_between_cancelation_and_arrival
+FROM `projeto-4-ana-caloi.hotel_bookings.booking_date` 
+ORDER BY booking_date
+
+## Hipótese 1: Reservas feitas com antecedência correm alto risco de cancelamento
+
+
+## Hipótese 2: Reservas que incluem crianças têm menor risco de cancelamento
+
+
+## Hipótese 3: Os usuários que fizeram uma alteração em sua reserva têm menor risco de cancelamento
+
+
+## Hipótese 4: Quando o usuário fez uma solicitação especial, o risco de cancelamento é menor
+
+
+## Hipótese 5: Reservas que possuem um baixo "adr" o risco é menor
